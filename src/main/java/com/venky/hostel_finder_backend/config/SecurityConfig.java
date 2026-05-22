@@ -29,14 +29,16 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // PUBLIC APIs (no login needed)
+                        // AUTH APIs
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // USER + ADMIN access
-                        .requestMatchers("/api/hostels/all").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/hostels/{id}").hasAnyRole("USER", "ADMIN")
+                        // PUBLIC APIs (Guest + User + Admin)
+                        .requestMatchers(
+                                "/api/hostels/all",
+                                "/api/hostels/*"
+                        ).permitAll()
 
-                        // ADMIN only
+                        // ADMIN ONLY
                         .requestMatchers("/api/hostels/add").hasRole("ADMIN")
                         .requestMatchers("/api/hostels/update/**").hasRole("ADMIN")
                         .requestMatchers("/api/hostels/delete/**").hasRole("ADMIN")
@@ -50,7 +52,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

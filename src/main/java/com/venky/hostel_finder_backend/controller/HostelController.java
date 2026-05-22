@@ -4,6 +4,8 @@ package com.venky.hostel_finder_backend.controller;
 import com.venky.hostel_finder_backend.entity.Hostel;
 import com.venky.hostel_finder_backend.service.HostelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,4 +49,15 @@ public class HostelController {
         return "Hostel deleted successfully";
     }
 
+    @GetMapping("search/location")
+    public ResponseEntity<List<String>> searchLocation(@RequestParam String keyword){
+        List<String> locations = hostelService.findLocations(keyword);
+        return ResponseEntity.ok(locations);
+    }
+
+    @GetMapping("/search/by-location")
+    public ResponseEntity<List<Hostel>> searchHostels(@RequestParam String location){
+        List<Hostel> hostels = hostelService.findHostelByLocation(location);
+        return new ResponseEntity<>(hostels , HttpStatus.OK);
+    }
 }

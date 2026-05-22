@@ -17,4 +17,8 @@ public interface HostelService {
     Hostel patchHostel(Long id, Map<String, Object> updates);
 
     void deleteHostel(Long id);
+
+    List<String> findLocations(String keyword);
+
+    List<Hostel> findHostelByLocation(String location);
 }

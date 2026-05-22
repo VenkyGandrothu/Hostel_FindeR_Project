@@ -5,6 +5,7 @@ import com.venky.hostel_finder_backend.repository.HostelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -144,4 +145,13 @@ public class HostelServiceImplementation implements HostelService{
         hostelRepo.delete(hostel);
     }
 
+    @Override
+    public List<String> findLocations(String keyword) {
+        return hostelRepo.findLocationByKeyword(keyword);
+    }
+
+    @Override
+    public List<Hostel> findHostelByLocation(String location) {
+        return hostelRepo.findHostelByLocation(location);
+    }
 }
