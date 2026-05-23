@@ -4,6 +4,7 @@ package com.venky.hostel_finder_backend.controller;
 import com.venky.hostel_finder_backend.entity.Hostel;
 import com.venky.hostel_finder_backend.service.HostelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,9 +56,22 @@ public class HostelController {
         return ResponseEntity.ok(locations);
     }
 
-    @GetMapping("/search/by-location")
-    public ResponseEntity<List<Hostel>> searchHostels(@RequestParam String location){
-        List<Hostel> hostels = hostelService.findHostelByLocation(location);
-        return new ResponseEntity<>(hostels , HttpStatus.OK);
+    @GetMapping("/search")
+    public ResponseEntity<Page<Hostel>> searchHostels(
+
+            @RequestParam String location,
+
+            @RequestParam(defaultValue = "0") int page,
+
+            @RequestParam(defaultValue = "5") int size
+    ) {
+
+        return ResponseEntity.ok(
+                hostelService.findHostelByLocation(
+                        location,
+                        page,
+                        size
+                )
+        );
     }
 }

@@ -1,6 +1,8 @@
 package com.venky.hostel_finder_backend.service;
 
 import com.venky.hostel_finder_backend.entity.Hostel;
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,5 +22,5 @@ public interface HostelService {
 
     List<String> findLocations(String keyword);
 
-    List<Hostel> findHostelByLocation(String location);
+    Page<Hostel> findHostelByLocation(String location, int page, int size);
 }

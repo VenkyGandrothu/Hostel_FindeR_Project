@@ -3,6 +3,9 @@ package com.venky.hostel_finder_backend.service;
 import com.venky.hostel_finder_backend.entity.Hostel;
 import com.venky.hostel_finder_backend.repository.HostelRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -149,9 +152,20 @@ public class HostelServiceImplementation implements HostelService{
     public List<String> findLocations(String keyword) {
         return hostelRepo.findLocationByKeyword(keyword);
     }
-
     @Override
-    public List<Hostel> findHostelByLocation(String location) {
-        return hostelRepo.findHostelByLocation(location);
+    public Page<Hostel> findHostelByLocation(
+            String location,
+            int page,
+            int size
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return hostelRepo.findHostelByLocation(
+                location,
+                pageable
+        );
     }
+
+
 }
