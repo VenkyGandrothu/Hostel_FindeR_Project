@@ -2,10 +2,12 @@ package com.venky.hostel_finder_backend.service;
 
 import com.venky.hostel_finder_backend.entity.Hostel;
 import com.venky.hostel_finder_backend.repository.HostelRepo;
+import com.venky.hostel_finder_backend.specification.HostelSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -152,19 +154,33 @@ public class HostelServiceImplementation implements HostelService{
     public List<String> findLocations(String keyword) {
         return hostelRepo.findLocationByKeyword(keyword);
     }
+
+
     @Override
-    public Page<Hostel> findHostelByLocation(
+    public Page<Hostel> searchHostels(
             String location,
+            String type,
+            Double minPrice,
+            Double maxPrice,
+            Double rating,
+            Integer beds,
             int page,
             int size
     ) {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        return hostelRepo.findHostelByLocation(
-                location,
-                pageable
-        );
+        Specification<Hostel> spec =
+                HostelSpecification.filterHostels(
+                        location,
+                        type,
+                        minPrice,
+                        maxPrice,
+                        rating,
+                        beds
+                );
+
+        return hostelRepo.findAll(spec, pageable);
     }
 
 

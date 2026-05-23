@@ -1,6 +1,7 @@
 package com.venky.hostel_finder_backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="hostel")
@@ -11,19 +12,41 @@ public class Hostel {
     private Long id;
 
     // BASIC
+    @NotBlank(message = "Hostel name is required")
     private String name;
+
+    @NotBlank(message = "Location is required")
     private String location;
+
+    @Pattern(regexp = "Mens|Girls|Co-living",
+            message = "Type must be Boys, Girls or Co-living")
     private String type;
+
+    @NotNull(message = "Price is required")
+    @Min(value = 500, message = "Minimum price is 500")
     private double price;
+
+    @NotBlank(message = "Description is required")
     private String description;
 
     // CONTACT
+    @NotBlank(message = "Owner name is required")
     private String ownerName;
+
+    @NotBlank(message = "Contact number is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid contact number")
     private String contactNumber;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
 
     // ACCOMMODATION
+    @NotNull(message = "Total beds is required")
+    @Min(value = 1, message = "At least 1 bed required")
     private int totalBeds;
+
+    @NotBlank(message = "Room type is required")
     private String roomType;
     private boolean attachedBathroom;
     private boolean acAvailable;
@@ -36,6 +59,7 @@ public class Hostel {
     private boolean waterFacility;
 
     // LOCATION
+    @NotBlank(message = "Address is required")
     private String address;
     private String googleMapLink;
     private String nearbyPlaces;

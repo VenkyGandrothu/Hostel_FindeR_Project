@@ -22,5 +22,5 @@ public interface HostelService {
 
     List<String> findLocations(String keyword);
 
-    Page<Hostel> findHostelByLocation(String location, int page, int size);
+    Page<Hostel> searchHostels(String location, String type, Double minPrice, Double maxPrice, Double rating, Integer beds, int page, int size);
 }
