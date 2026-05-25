@@ -15,6 +15,7 @@ function Hero() {
           maxWidth: "1280px",
           borderRadius: "32px",
           overflow: "hidden",
+          height: "420px",
         }}
       >
         <img
@@ -23,83 +24,99 @@ function Hero() {
           aria-hidden
           style={{
             width: "100%",
-            height: "420px",
+            height: "100%",
             objectFit: "cover",
-            objectPosition: "center 38%",
+            objectPosition: "center",
             display: "block",
           }}
         />
 
-        {/* Text left, cities right — like Figma reference */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
+            display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            columnGap: "24px",
-            padding: "40px 28px 96px 64px",
+            padding: "12px 90px 92px 88px",
+            gap: "12px",
             zIndex: 5,
             pointerEvents: "none",
             boxSizing: "border-box",
           }}
         >
-          <div style={{ textAlign: "left", alignSelf: "center" }}>
+          <div
+            style={{
+              textAlign: "left",
+              flex: "1",
+              minWidth: 0,
+              maxWidth: "520px",
+              paddingTop: "8px",
+            }}
+          >
             <h1
               style={{
                 margin: 0,
                 color: "#FFFFFF",
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "clamp(28px, 4vw, 48px)",
+                fontSize: "clamp(32px, 4.5vw, 52px)",
                 fontWeight: 700,
-                lineHeight: 1.2,
+                lineHeight: 1.1,
               }}
             >
               Choose a city
             </h1>
             <p
               style={{
-                margin: "6px 0 0",
+                margin: "8px 0 0",
                 color: "#FFFFFF",
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "clamp(16px, 2.2vw, 24px)",
-                fontWeight: 700,
-                lineHeight: 1.35,
-                maxWidth: "520px",
+                fontSize: "clamp(18px, 2.5vw, 26px)",
+                fontWeight: 500,
+                lineHeight: 1.3,
+                maxWidth: "480px",
+                opacity: 0.9,
               }}
             >
               and find your home away from home
             </p>
           </div>
 
-          <img
-            src={citiesImage}
-            alt=""
-            aria-hidden
+          <div
             style={{
-              height: "auto",
-              maxHeight: "240px",
-              width: "auto",
-              maxWidth: "min(400px, 38vw)",
-              objectFit: "contain",
-              objectPosition: "right center",
-              justifySelf: "end",
-              alignSelf: "center",
+              flex: "0 1 auto",
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              marginLeft: "8px",
             }}
-          />
+          >
+            <img
+              src={citiesImage}
+              alt="Cities Illustration"
+              style={{
+                height: "auto",
+                maxHeight: "268px",
+                width: "auto",
+                maxWidth: "min(400px, 38vw)",
+                objectFit: "contain",
+                transform: "translateX(-36px)",
+                filter: "drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15))",
+              }}
+            />
+          </div>
         </div>
 
         <div
           style={{
             position: "absolute",
             left: "50%",
-            bottom: "55px",
+            bottom: "44px",
             transform: "translateX(-50%)",
-            width: "85%",
+            width: "90%",
             maxWidth: "860px",
             zIndex: 10,
-            boxSizing: "border-box",
+            pointerEvents: "auto",
           }}
         >
           <SearchBar />
