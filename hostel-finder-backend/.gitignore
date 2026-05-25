@@ -1,0 +1,116 @@
+# ==========================================
+# Spring Boot / Maven / Java .gitignore
+# Professional Full Version
+# ==========================================
+
+# =====================
+# Build folders
+# =====================
+target/
+build/
+out/
+
+# Keep wrapper jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# =====================
+# Java compiled files
+# =====================
+*.class
+*.jar
+*.war
+*.ear
+
+# =====================
+# Logs
+# =====================
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+
+# =====================
+# Temporary files
+# =====================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# =====================
+# Environment files
+# =====================
+.env
+.env.*
+application-local.properties
+application-dev.properties
+
+# =====================
+# OS generated files
+# =====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =====================
+# IntelliJ IDEA
+# =====================
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# =====================
+# Eclipse / STS
+# =====================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# =====================
+# VS Code
+# =====================
+.vscode/
+
+# =====================
+# NetBeans
+# =====================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# =====================
+# Maven Wrapper
+# =====================
+.mvn/timing.properties
+
+# =====================
+# Test Reports
+# =====================
+surefire-reports/
+failsafe-reports/
+
+# =====================
+# Coverage Reports
+# =====================
+coverage/
+jacoco.exec
+
+# =====================
+# Mac / Linux hidden
+# =====================
+.Trashes
+.Spotlight-V100
+
+# =====================
+# Keep source folders safe
+# =====================
+!**/src/main/**
+!**/src/test/**

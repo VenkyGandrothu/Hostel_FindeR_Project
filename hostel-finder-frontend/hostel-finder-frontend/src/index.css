@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/* =========================
+   GLOBAL DESIGN VARIABLES
+========================= */
+
+:root {
+
+  /* Primary Colors */
+  --primary-dark: #6A1B9A;
+  --primary: #8E24AA;
+  --primary-light: #BA68CB;
+
+  /* Accent */
+  --accent: #FBC02D;
+  --search-btn: #FFC13B;
+
+  /* Background / Neutral */
+  --surface-white: #ffffff;
+  --bg-light: #F5F5F5;
+  --neutral-light: #CFD8DC;
+  --neutral-dark: #B0BEC5;
+
+  /* Font */
+  --font-main: "Open Sans", sans-serif;
+}
+
+
+/* =========================
+   GLOBAL RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:var(--font-main);
+    background-color:var(--surface-white);
+    color:var(--primary-dark);
+    min-height:100vh;
+}
+
+.search-bar-input::placeholder{
+    color:#4A4A4A;
+    opacity:1;
+}
+
+
+/* =========================
+   TYPOGRAPHY SYSTEM
+========================= */
+
+/* Display */
+
+.display1{
+    font-size:72px;
+    font-weight:700;
+    line-height:1.2;
+    color:var(--primary-dark);
+}
+
+
+/* Headings */
+
+.heading1{
+    font-size:56px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.heading2{
+    font-size:48px;
+    font-weight:700;
+    line-height:1.2;
+    color:var(--primary-light);
+}
+
+.heading3{
+    font-size:32px;
+    font-weight:700;
+    line-height:1.3;
+}
+
+.heading4{
+    font-size:24px;
+    font-weight:700;
+    line-height:1.4;
+}
+
+.heading4-uppercase{
+    font-size:24px;
+    font-weight:700;
+    text-transform:uppercase;
+    line-height:1.4;
+}
+
+
+/* Paragraphs */
+
+.paragraph1{
+    font-size:18px;
+    font-weight:400;
+    line-height:1.6;
+}
+
+.paragraph2{
+    font-size:16px;
+    font-weight:400;
+    line-height:1.6;
+}
+
+.paragraph3{
+    font-size:14px;
+    font-weight:400;
+    line-height:1.6;
+}
+
+
+/* =========================
+   BUTTON / LINKS
+========================= */
+
+.btn-text{
+    font-size:20px;
+    font-weight:700;
+}
+
+.link-text{
+    font-size:20px;
+    font-weight:600;
+}
+
+
+/* =========================
+   COMMON REUSABLE BUTTONS
+========================= */
+
+.primary-btn{
+    background-color:var(--accent);
+    color:black;
+    border:none;
+    border-radius:12px;
+    padding:12px 24px;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+}
+
+
+.secondary-btn{
+    background-color:var(--primary);
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:12px 24px;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:700;
+}
+
+
+/* =========================
+   RESPONSIVE TYPOGRAPHY
+========================= */
+
+@media(max-width:768px){
+
+.display1{
+    font-size:48px;
+}
+
+.heading1{
+    font-size:40px;
+}
+
+.heading2{
+    font-size:34px;
+}
+
+.heading3{
+    font-size:28px;
+}
+
+.heading4{
+    font-size:22px;
+}
+
+.paragraph1{
+    font-size:16px;
+}
+
+}
