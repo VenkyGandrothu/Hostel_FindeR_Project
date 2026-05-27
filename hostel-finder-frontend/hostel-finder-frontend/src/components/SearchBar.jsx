@@ -9,10 +9,11 @@ function LocationPinIcon() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
+      className="h-5 w-5 shrink-0 sm:h-[22px] sm:w-[22px]"
     >
       <path
         d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
-        fill="#000000"
+        fill="var(--text-primary)"
       />
     </svg>
   );
@@ -29,30 +30,12 @@ function SearchBar({ className, style }) {
 
   return (
     <div
-      className={className}
-      style={{
-        width: "100%",
-        background: "var(--surface-white, #ffffff)",
-        borderRadius: "22px",
-        padding: "10px 14px",
-        boxShadow: "0 15px 40px rgba(0, 0, 0, 0.15)",
-        ...style,
-      }}
+      className={`w-full rounded-[var(--radius-xl)] bg-[var(--surface-white)] px-3 py-2 shadow-[var(--shadow-floating)] sm:px-[14px] sm:py-[10px] ${className ?? ""}`}
+      style={style}
     >
       <form
         onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          height: "52px",
-          paddingLeft: "8px",
-          paddingRight: "6px",
-          gap: "14px",
-          backgroundColor: "transparent",
-          border: "none",
-          margin: 0,
-        }}
+        className="m-0 flex h-auto w-full items-center gap-3 border-none bg-transparent px-1 py-1 sm:h-[52px] sm:gap-[14px] sm:px-2 sm:py-0 sm:pr-[6px]"
       >
         <LocationPinIcon />
 
@@ -62,37 +45,15 @@ function SearchBar({ className, style }) {
           onChange={(e) => setCity(e.target.value)}
           placeholder="Which City you want to stay?"
           aria-label="Which city do you want to stay in?"
-          className="search-bar-input"
-          style={{
-            flex: 1,
-            minWidth: 0,
-            border: "none",
-            outline: "none",
-            background: "transparent",
-            fontSize: "18px",
-            fontFamily: "var(--font-main), 'Open Sans', sans-serif",
-            fontWeight: 400,
-            color: "#1A1A1A",
-          }}
+          autoComplete="off"
+          spellCheck={false}
+          className="search-bar-input min-w-0 flex-1 border-none bg-transparent text-base font-normal text-[var(--text-primary)] outline-none sm:text-lg"
+          style={{ fontFamily: "var(--font-main)" }}
         />
 
         <button
           type="submit"
-          style={{
-            flexShrink: 0,
-            height: "48px",
-            paddingLeft: "32px",
-            paddingRight: "32px",
-            backgroundColor: "var(--search-btn, #FBC02D)",
-            color: "#FFFFFF",
-            fontSize: "18px",
-            fontFamily: "var(--font-main), 'Open Sans', sans-serif",
-            fontWeight: 600,
-            border: "none",
-            borderRadius: "100px",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
+          className="inline-flex h-11 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[12px] border-none bg-[var(--secondary-btn)] px-5 font-[var(--font-display)] text-base font-semibold text-black transition-transform duration-200 hover:-translate-y-0.5 sm:h-12 sm:px-8 sm:text-lg"
         >
           Lets go
         </button>

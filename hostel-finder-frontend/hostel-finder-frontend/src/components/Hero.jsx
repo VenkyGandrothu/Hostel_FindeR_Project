@@ -4,122 +4,38 @@ import SearchBar from "./SearchBar";
 
 function Hero() {
   return (
-    <section
-      className="mt-5 flex w-full justify-center px-5"
-      style={{ background: "var(--surface-white, #ffffff)" }}
-    >
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: "1280px",
-          borderRadius: "32px",
-          overflow: "hidden",
-          height: "420px",
-        }}
-      >
-        <img
-          src={heroImage}
-          alt=""
-          aria-hidden
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-            display: "block",
-          }}
-        />
+    <section className="mt-5 bg-[var(--surface-white)]">
+      <div className="mx-auto flex w-full max-w-[1280px] justify-center px-4 sm:px-5 lg:px-10">
+        <div className="relative h-[560px] w-full max-w-[1280px] overflow-hidden rounded-[var(--radius-2xl)] sm:h-[460px] lg:h-[420px]">
+          <img
+            src={heroImage}
+            alt=""
+            aria-hidden
+            className="block h-full w-full object-cover object-center"
+          />
 
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "12px 90px 92px 88px",
-            gap: "12px",
-            zIndex: 5,
-            pointerEvents: "none",
-            boxSizing: "border-box",
-          }}
-        >
-          <div
-            style={{
-              textAlign: "left",
-              flex: "1",
-              minWidth: 0,
-              maxWidth: "520px",
-              paddingTop: "8px",
-            }}
-          >
-            <h1
-              style={{
-                margin: 0,
-                color: "#FFFFFF",
-                fontFamily: "Poppins, sans-serif",
-                fontSize: "clamp(32px, 4.5vw, 52px)",
-                fontWeight: 700,
-                lineHeight: 1.1,
-              }}
-            >
-              Choose a city
-            </h1>
-            <p
-              style={{
-                margin: "8px 0 0",
-                color: "#FFFFFF",
-                fontFamily: "Poppins, sans-serif",
-                fontSize: "clamp(18px, 2.5vw, 26px)",
-                fontWeight: 500,
-                lineHeight: 1.3,
-                maxWidth: "480px",
-                opacity: 0.9,
-              }}
-            >
-              and find your home away from home
-            </p>
+          <div className="pointer-events-none absolute inset-0 z-[5] flex items-start justify-between gap-3 px-5 pb-36 pt-10 sm:items-center sm:px-10 sm:pb-28 sm:pt-6 lg:px-[88px] lg:pb-[92px] lg:pt-3">
+            <div className="min-w-0 flex-1 max-w-[520px] pt-2 text-left">
+              <h1 className="m-0 font-[var(--font-display)] text-[clamp(32px,4.5vw,52px)] font-bold leading-[1.1] text-white">
+                Choose a city
+              </h1>
+              <p className="mt-2 max-w-[480px] font-[var(--font-display)] text-[clamp(18px,2.5vw,26px)] font-medium leading-[1.3] text-white/90">
+                and find your home away from home
+              </p>
+            </div>
+
+            <div className="ml-2 hidden flex-[0_1_auto] items-center justify-end sm:flex">
+              <img
+                src={citiesImage}
+                alt="Cities Illustration"
+                className="h-auto max-h-[220px] w-auto max-w-[min(320px,38vw)] -translate-x-3 object-contain drop-shadow-[var(--shadow-soft)] lg:max-h-[268px] lg:max-w-[min(400px,38vw)] lg:-translate-x-9"
+              />
+            </div>
           </div>
 
-          <div
-            style={{
-              flex: "0 1 auto",
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              marginLeft: "8px",
-            }}
-          >
-            <img
-              src={citiesImage}
-              alt="Cities Illustration"
-              style={{
-                height: "auto",
-                maxHeight: "268px",
-                width: "auto",
-                maxWidth: "min(400px, 38vw)",
-                objectFit: "contain",
-                transform: "translateX(-36px)",
-                filter: "drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15))",
-              }}
-            />
+          <div className="pointer-events-auto absolute bottom-6 left-1/2 z-10 w-[94%] max-w-[860px] -translate-x-1/2 sm:bottom-11 sm:w-[90%]">
+            <SearchBar />
           </div>
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            bottom: "44px",
-            transform: "translateX(-50%)",
-            width: "90%",
-            maxWidth: "860px",
-            zIndex: 10,
-            pointerEvents: "auto",
-          }}
-        >
-          <SearchBar />
         </div>
       </div>
     </section>

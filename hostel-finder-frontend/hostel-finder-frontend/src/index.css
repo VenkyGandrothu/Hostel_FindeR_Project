@@ -23,9 +23,31 @@
 
   /* Font */
   --font-main: "Open Sans", sans-serif;
+  --font-display: "Poppins", sans-serif;
+
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-muted: #4a4a4a;
+
+  /* Radius */
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* Effects */
+  --shadow-soft: 0 10px 20px rgba(0, 0, 0, 0.15);
+  --shadow-floating: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-
+/* src/index.css (or src/App.css) */
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
 /* =========================
    GLOBAL RESET
 ========================= */
@@ -48,7 +70,7 @@ body{
 }
 
 .search-bar-input::placeholder{
-    color:#4A4A4A;
+    color:var(--text-muted);
     opacity:1;
 }
 
