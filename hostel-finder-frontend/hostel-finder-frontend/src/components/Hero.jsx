@@ -13,7 +13,6 @@ function Hero() {
             aria-hidden
             className="block h-full w-full object-cover object-center"
           />
-
           <div className="pointer-events-none absolute inset-0 z-[5] flex items-start justify-between gap-3 px-5 pb-36 pt-10 sm:items-center sm:px-10 sm:pb-28 sm:pt-6 lg:px-[88px] lg:pb-[92px] lg:pt-3">
             <div className="min-w-0 flex-1 max-w-[520px] pt-2 text-left">
               <h1 className="m-0 font-[var(--font-display)] text-[clamp(32px,4.5vw,52px)] font-bold leading-[1.1] text-white">
@@ -23,7 +22,6 @@ function Hero() {
                 and find your home away from home
               </p>
             </div>
-
             <div className="ml-2 hidden flex-[0_1_auto] items-center justify-end sm:flex">
               <img
                 src={citiesImage}
