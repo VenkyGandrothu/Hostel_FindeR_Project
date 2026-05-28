@@ -10,7 +10,7 @@ function Navbar() {
           className="h-12 w-auto cursor-pointer object-contain sm:h-[60px]"
         />
         <div className="flex items-center">
-          <button type="button" className="primary-btn">
+          <button type="button" className="login-btn">
             Login
           </button>
         </div>

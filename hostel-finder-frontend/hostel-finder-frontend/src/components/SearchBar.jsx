@@ -53,7 +53,7 @@ function SearchBar({ className, style }) {
 
         <button
           type="submit"
-          className="inline-flex h-11 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap rounded-[12px] border-none bg-[var(--secondary-btn)] px-5 font-[var(--font-display)] text-base font-semibold text-black transition-transform duration-200 hover:-translate-y-0.5 sm:h-12 sm:px-8 sm:text-lg"
+          className="secondary-btn inline-flex shrink-0 items-center justify-center whitespace-nowrap"
         >
           Lets go
         </button>
