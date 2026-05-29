@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function KnowMore() {
   return (
@@ -15,6 +16,7 @@ function KnowMore() {
           Back to Home
         </Link>
       </main>
+      <Footer />
     </>
   );
 }

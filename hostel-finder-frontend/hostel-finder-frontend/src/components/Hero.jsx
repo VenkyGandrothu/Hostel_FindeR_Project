@@ -1,5 +1,6 @@
 import heroImage from "../assets/hero/HeroImg.png";
 import citiesImage from "../assets/hero/citie.png";
+import arrowImage from "../assets/hero/arrow.png";
 
 function Hero() {
   return (
@@ -16,6 +17,12 @@ function Hero() {
             <h1 className="hero-title">Choose Your Perfect Hostel</h1>
             <p className="hero-subtitle">-find your home away from home.</p>
           </div>
+          <img
+            src={arrowImage}
+            alt=""
+            className="hero-arrow"
+            aria-hidden="true"
+          />
           <img
             src={citiesImage}
             alt="Landmarks from cities across India"

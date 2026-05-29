@@ -5,6 +5,7 @@ import Stats from "../components/Stats";
 import HostelTypes from "../components/HostelTypes";
 import Services from "../components/Services";
 import Testimonials from "../components/Testimonials";
+import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -18,6 +19,7 @@ function Home() {
         <Services />
       </div>
       <Testimonials />
+      <Footer />
     </>
   );
 }

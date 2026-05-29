@@ -138,6 +138,15 @@ html {
     max-width: 42%;
 }
 
+.hero-arrow {
+    flex-shrink: 0;
+    align-self: center;
+    width: auto;
+    max-width: 140px;
+    height: auto;
+    object-fit: contain;
+}
+
 .hero-cities {
     flex-shrink: 0;
     align-self: center;
@@ -175,6 +184,10 @@ html {
 
     .hero-text {
         max-width: 48%;
+    }
+
+    .hero-arrow {
+        max-width: 72px;
     }
 
     .hero-cities {
@@ -1241,6 +1254,139 @@ body{
 .know-more-back-link:hover {
     color: var(--primary-dark);
 }
+
+/* =========================
+   SITE FOOTER
+========================= */
+
+.site-footer {
+    width: 100%;
+    margin-top: 24px;
+    padding: 48px 24px 0;
+    background-color: var(--primary-dark);
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+.site-footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 32px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 36px;
+}
+
+.site-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.site-footer-logo-link {
+    display: inline-block;
+    width: fit-content;
+}
+
+.site-footer-logo {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.site-footer-tagline {
+    margin: 0;
+    max-width: 280px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.site-footer-nav-title {
+    margin: 0 0 16px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #ffffff;
+}
+
+.site-footer-link-list,
+.site-footer-contact-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-footer-link-list li + li,
+.site-footer-contact-list li + li {
+    margin-top: 10px;
+}
+
+.site-footer-link {
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.site-footer-link:hover,
+.site-footer-link:focus-visible {
+    color: var(--accent);
+    outline: none;
+}
+
+.site-footer-contact-note {
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.site-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 18px 24px;
+    text-align: center;
+}
+
+.site-footer-copy {
+    margin: 0;
+    font-family: var(--font-main);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 900px) {
+    .site-footer-inner {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .site-footer {
+        padding: 36px 16px 0;
+    }
+
+    .site-footer-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-bottom: 28px;
+    }
+
+    .site-footer-tagline {
+        max-width: 100%;
+    }
+}
+
 
 /* =========================
    COMMON REUSABLE BUTTONS
