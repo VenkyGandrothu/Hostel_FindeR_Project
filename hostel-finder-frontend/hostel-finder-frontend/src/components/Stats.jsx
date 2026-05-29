@@ -33,8 +33,8 @@ const STATS = [
 function Stats() {
   return (
     <section className="stats-section" aria-labelledby="stats-heading">
-      <header className="stats-header">
-        <h2 id="stats-heading" className="stats-heading">
+      <header className="section-header">
+        <h2 id="stats-heading" className="section-heading">
           Our Impact in Numbers
         </h2>
       </header>

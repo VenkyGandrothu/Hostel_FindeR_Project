@@ -1,35 +1,36 @@
+import verifiedIcon from "../assets/services/Verified listing.png";
+import bookingIcon from "../assets/services/instantBooking.png";
+import supportIcon from "../assets/services/costomercare.png";
+
 const SERVICES = [
   {
     id: "verified",
     title: "Verified Listings",
     description:
       "Every hostel is vetted for safety, cleanliness, and reliability.",
-    image: "https://placehold.co/100x100/png?text=Verified",
-    variant: "solid",
+    image: verifiedIcon,
   },
   {
     id: "booking",
     title: "Instant Booking",
     description:
-      "Reserve your spot in seconds with real‑time availability checks.",
-    image: "https://placehold.co/100x100/png?text=Booking",
-    variant: "gradient",
+      "Reserve your spot in seconds with real-time availability checks.",
+    image: bookingIcon,
   },
   {
     id: "support",
     title: "24/7 Support",
     description:
       "Our team is here day and night to help you with any query.",
-    image: "https://placehold.co/100x100/png?text=Support",
-    variant: "gradient",
+    image: supportIcon,
   },
 ];
 
 function Services() {
   return (
     <section className="services-section" aria-labelledby="services-heading">
-      <header className="services-header">
-        <h2 id="services-heading" className="services-heading">
+      <header className="section-header">
+        <h2 id="services-heading" className="section-heading">
           Services We Are Providing
         </h2>
       </header>
@@ -37,9 +38,7 @@ function Services() {
       <ul className="services-grid">
         {SERVICES.map((service) => (
           <li key={service.id} className="services-grid-item">
-            <article
-              className={`service-card service-card--${service.variant}`}
-            >
+            <article className="service-item">
               <img
                 src={service.image}
                 alt=""

@@ -33,8 +33,8 @@ function HostelTypes() {
 
   return (
     <section className="hostel-types-section" aria-labelledby="hostel-types-heading">
-      <header className="hostel-types-header">
-        <h2 id="hostel-types-heading" className="hostel-types-heading">
+      <header className="section-header">
+        <h2 id="hostel-types-heading" className="section-heading">
           Choose Your Type
         </h2>
       </header>
