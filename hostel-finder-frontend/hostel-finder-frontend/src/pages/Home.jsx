@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
 import Stats from "../components/Stats";
 import HostelTypes from "../components/HostelTypes";
+import Services from "../components/Services";
 
 function Home() {
   return (
@@ -12,6 +13,7 @@ function Home() {
       <SearchBar />
       <HostelTypes />
       <Stats />
+      <Services />
     </div>
   );
 }
