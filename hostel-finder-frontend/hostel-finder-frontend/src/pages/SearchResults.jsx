@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { searchHostelsByLocation } from "../api/hostelApi";
 import Footer from "../components/Footer";
+import HostelCard from "../components/HostelCard";
 import Navbar from "../components/Navbar";
 
 function SearchResults() {
@@ -97,15 +98,6 @@ function SearchResults() {
 
           {city && status === "success" && result && (
             <div className="search-results-page">
-              <div className="search-results-header">
-                <h1 className="search-results-title">
-                  {type ? `${type} hostels in ${city}` : `Hostels in ${city}`}
-                </h1>
-                <p className="search-results-text">
-                  {total} hostel{total === 1 ? "" : "s"} found
-                </p>
-              </div>
-
               {hostels.length === 0 ? (
                 <div className="search-results-card">
                   <p className="search-results-empty">
@@ -119,20 +111,8 @@ function SearchResults() {
               ) : (
                 <ul className="hostel-results-list">
                   {hostels.map((hostel) => (
-                    <li key={hostel.id} className="hostel-result-card">
-                      <div className="hostel-result-main">
-                        <h2 className="hostel-result-name">{hostel.name}</h2>
-                        <p className="hostel-result-location">{hostel.location}</p>
-                        <p className="hostel-result-description">
-                          {hostel.description}
-                        </p>
-                      </div>
-                      <div className="hostel-result-meta">
-                        <span className="hostel-result-type">{hostel.type}</span>
-                        <span className="hostel-result-price">
-                          ₹{hostel.price}/mo
-                        </span>
-                      </div>
+                    <li key={hostel.id} className="hostel-results-list-item">
+                      <HostelCard hostel={hostel} />
                     </li>
                   ))}
                 </ul>
