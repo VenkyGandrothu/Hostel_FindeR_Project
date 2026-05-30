@@ -1,331 +1,185 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { searchLocations } from "../api/hostelApi";
 
-const CITY_SEARCH_API =
-  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080";
-const MIN_KEYWORD_LENGTH = 1;
-const SEARCH_DEBOUNCE_MS = 350;
-
-function LocationIcon() {
+function CityBuildingIcon() {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
     >
-      <path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10z" />
-      <circle cx="12" cy="11" r="2.5" />
+      <path
+        d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-4h2v4M13 21v-4h2v4M9 9h1M9 12h1M9 15h1M14 9h1M14 12h1M14 15h1"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-function GpsIcon() {
+function LocationPinIcon() {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
     >
-      <circle cx="12" cy="12" r="3" />
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+      <path
+        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"
+        fill="currentColor"
+      />
     </svg>
-  );
-}
-
-function normalizeCities(payload) {
-  const list = Array.isArray(payload)
-    ? payload
-    : payload?.cities ?? payload?.data ?? [];
-
-  return list
-    .map((item) => {
-      if (typeof item === "string") {
-        return { id: item, name: item };
-      }
-      if (item?.name) {
-        return { id: String(item.id ?? item.name), name: item.name };
-      }
-      return null;
-    })
-    .filter(Boolean);
-}
-
-async function fetchCitySuggestions(keyword, signal) {
-  const response = await fetch(`${CITY_SEARCH_API}/api/cities/search`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ keyword }),
-    signal,
-  });
-
-  if (!response.ok) {
-    throw new Error("City search request failed");
-  }
-
-  const data = await response.json();
-  return normalizeCities(data);
-}
-
-async function reverseGeocode(latitude, longitude) {
-  const url = new URL("https://nominatim.openstreetmap.org/reverse");
-  url.searchParams.set("lat", String(latitude));
-  url.searchParams.set("lon", String(longitude));
-  url.searchParams.set("format", "json");
-
-  const response = await fetch(url.toString(), {
-    headers: { Accept: "application/json" },
-  });
-
-  if (!response.ok) {
-    throw new Error("Could not resolve location name");
-  }
-
-  const data = await response.json();
-  const address = data.address ?? {};
-
-  return (
-    address.city ||
-    address.town ||
-    address.village ||
-    address.suburb ||
-    address.state_district ||
-    data.display_name?.split(",")[0] ||
-    "Near me"
   );
 }
 
 function SearchBar() {
-  const [location, setLocation] = useState("");
-  const [isLocating, setIsLocating] = useState(false);
-  const [gpsActive, setGpsActive] = useState(false);
-  const [coords, setCoords] = useState(null);
+  const navigate = useNavigate();
+  const listboxId = useId();
+  const comboboxRef = useRef(null);
+
+  const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchError, setSearchError] = useState("");
 
-  const abortRef = useRef(null);
+  const goToCitySearch = useCallback(
+    (cityName) => {
+      const trimmed = cityName.trim();
+      if (!trimmed) return;
+
+      setCity(trimmed);
+      setIsDropdownOpen(false);
+      navigate(`/search?city=${encodeURIComponent(trimmed)}`);
+    },
+    [navigate],
+  );
 
   useEffect(() => {
-    if (gpsActive) {
-      setSuggestions([]);
-      setShowDropdown(false);
-      setHasSearched(false);
-      return;
-    }
+    const query = city.trim();
 
-    const keyword = location.trim();
-
-    if (keyword.length < MIN_KEYWORD_LENGTH) {
+    if (!query) {
       setSuggestions([]);
-      setShowDropdown(false);
-      setHasSearched(false);
       setIsSearching(false);
+      setSearchError("");
       return;
     }
+
+    setIsSearching(true);
+    setSearchError("");
+    setIsDropdownOpen(true);
 
     const timer = setTimeout(async () => {
-      abortRef.current?.abort();
-      const controller = new AbortController();
-      abortRef.current = controller;
-
-      setIsSearching(true);
-      setShowDropdown(true);
-      setHasSearched(false);
-
       try {
-        const cities = await fetchCitySuggestions(keyword, controller.signal);
-        setSuggestions(cities);
-        setHasSearched(true);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setSuggestions([]);
-          setHasSearched(true);
-        }
+        const results = await searchLocations(query);
+        setSuggestions(Array.isArray(results) ? results : []);
+      } catch {
+        setSuggestions([]);
+        setSearchError("Could not search cities. Please try again.");
       } finally {
-        if (!controller.signal.aborted) {
-          setIsSearching(false);
-        }
+        setIsSearching(false);
       }
-    }, SEARCH_DEBOUNCE_MS);
+    }, 350);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [location, gpsActive]);
+    return () => clearTimeout(timer);
+  }, [city]);
 
   useEffect(() => {
-    return () => abortRef.current?.abort();
+    function handleClickOutside(event) {
+      if (!comboboxRef.current?.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const query = location.trim();
-    if (!query) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    goToCitySearch(city);
+  };
 
-    setShowDropdown(false);
-
-    if (gpsActive && coords) {
-      console.log("Nearby search:", { query, ...coords });
-      return;
-    }
-
-    console.log("Search:", query);
-  }
-
-  function handleUseMyLocation() {
-    if (!navigator.geolocation) {
-      window.alert("Geolocation is not supported in this browser.");
-      return;
-    }
-
-    setShowDropdown(false);
-    setSuggestions([]);
-    setHasSearched(false);
-    setIsLocating(true);
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        setCoords({ latitude, longitude });
-
-        try {
-          const placeName = await reverseGeocode(latitude, longitude);
-          setLocation(placeName);
-          setGpsActive(true);
-          console.log("Nearby search:", {
-            label: placeName,
-            latitude,
-            longitude,
-          });
-        } catch {
-          setLocation("Near me");
-          setGpsActive(true);
-          console.log("Nearby search:", { latitude, longitude });
-        } finally {
-          setIsLocating(false);
-        }
-      },
-      (error) => {
-        setIsLocating(false);
-        setGpsActive(false);
-        setCoords(null);
-
-        if (error.code === error.PERMISSION_DENIED) {
-          window.alert("Allow location access to search hostels near you.");
-          return;
-        }
-
-        window.alert("Unable to get your location. Please try again.");
-      },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
-    );
-  }
-
-  function handleInputChange(event) {
-    setLocation(event.target.value);
-    setGpsActive(false);
-    setCoords(null);
-  }
-
-  function handleInputFocus() {
-    const keyword = location.trim();
-    if (keyword.length >= MIN_KEYWORD_LENGTH && (isSearching || hasSearched)) {
-      setShowDropdown(true);
-    }
-  }
-
-  function handleInputBlur() {
-    window.setTimeout(() => setShowDropdown(false), 150);
-  }
-
-  function handleSelectCity(city) {
-    setLocation(city.name);
-    setSuggestions([]);
-    setShowDropdown(false);
-    setHasSearched(false);
-    setGpsActive(false);
-    setCoords(null);
-  }
-
-  const keyword = location.trim();
-  const showResults =
-    showDropdown && keyword.length >= MIN_KEYWORD_LENGTH && !gpsActive;
+  const trimmedCity = city.trim();
+  const showDropdown = isDropdownOpen && trimmedCity.length > 0;
 
   return (
-    <main className="search-bar" aria-label="Search hostels">
+    <div className="search-bar">
       <form className="search-bar-card" onSubmit={handleSubmit}>
-        <div className="search-bar-combobox">
+        <div className="search-bar-combobox" ref={comboboxRef}>
           <div className="search-bar-field">
-            <span className="search-bar-icon">
-              <LocationIcon />
+            <span className="search-bar-icon" aria-hidden="true">
+              <LocationPinIcon />
             </span>
             <input
               type="text"
-              value={location}
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              placeholder="Enter city or area"
-              className="search-bar-input"
-              aria-label="Search location"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              onFocus={() => city.trim() && setIsDropdownOpen(true)}
+              placeholder="Which City you want to stay?"
+              aria-label="Which city do you want to stay in?"
               aria-autocomplete="list"
-              aria-expanded={showResults}
-              aria-controls="city-suggestions-list"
+              aria-expanded={showDropdown}
+              aria-controls={showDropdown ? listboxId : undefined}
+              autoComplete="off"
+              spellCheck={false}
+              className="search-bar-input"
+              role="combobox"
             />
-            <button
-              type="button"
-              className={`search-bar-gps-btn${gpsActive ? " is-active" : ""}`}
-              onClick={handleUseMyLocation}
-              disabled={isLocating}
-              aria-label="Use my location to search nearby hostels"
-              title="Search near my location"
-            >
-              <GpsIcon />
-            </button>
           </div>
 
-          {showResults && (
+          {showDropdown && (
             <ul
-              id="city-suggestions-list"
+              id={listboxId}
               className="search-bar-dropdown"
               role="listbox"
               aria-label="City suggestions"
             >
               {isSearching && (
                 <li className="search-bar-dropdown-message" role="status">
-                  Searching cities...
+                  Searching for &ldquo;{city.trim()}&rdquo;...
                 </li>
               )}
 
-              {!isSearching && hasSearched && suggestions.length === 0 && (
-                <li className="search-bar-dropdown-message" role="status">
-                  No city found
+              {!isSearching && searchError && (
+                <li className="search-bar-dropdown-message" role="alert">
+                  {searchError}
                 </li>
               )}
 
               {!isSearching &&
-                suggestions.map((city) => (
-                  <li key={city.id} role="option">
+                !searchError &&
+                suggestions.length === 0 && (
+                  <li className="search-bar-dropdown-message">
+                    No cities found for &ldquo;{city.trim()}&rdquo;
+                  </li>
+                )}
+
+              {!isSearching &&
+                suggestions.map((location) => (
+                  <li key={location} role="presentation">
                     <button
                       type="button"
                       className="search-bar-dropdown-item"
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => handleSelectCity(city)}
+                      role="option"
+                      onClick={() => goToCitySearch(location)}
                     >
-                      <span className="search-bar-dropdown-icon">
-                        <LocationIcon />
+                      <span
+                        className="search-bar-dropdown-icon"
+                        aria-hidden="true"
+                      >
+                        <CityBuildingIcon />
                       </span>
-                      <span className="search-bar-dropdown-city">{city.name}</span>
+                      <span className="search-bar-dropdown-city">{location}</span>
                     </button>
                   </li>
                 ))}
@@ -333,11 +187,15 @@ function SearchBar() {
           )}
         </div>
 
-        <button type="submit" className="search-bar-btn">
-          {gpsActive ? "Search nearby" : "Search"}
+        <button
+          type="submit"
+          className="search-bar-btn"
+          disabled={!city.trim() || isSearching}
+        >
+          Lets go
         </button>
       </form>
-    </main>
+    </div>
   );
 }
 
