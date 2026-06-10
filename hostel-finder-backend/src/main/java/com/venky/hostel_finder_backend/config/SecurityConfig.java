@@ -35,6 +35,8 @@ public class SecurityConfig {
                         // PUBLIC APIs (Guest + User + Admin)
                         .requestMatchers(
                                 "/api/hostels/all",
+                                "/api/hostels/search",
+                                "/api/hostels/search/**",
                                 "/api/hostels/*"
                         ).permitAll()
 
