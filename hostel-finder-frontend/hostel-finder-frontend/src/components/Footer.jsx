@@ -64,12 +64,12 @@ function Footer() {
           <ul className="site-footer-contact-list">
             <li>
               <a href="mailto:support@hostelfinder.com" className="site-footer-link">
-                support@hostelfinder.com
+                gandrothuvenky@gmail.com
               </a>
             </li>
             <li>
               <a href="tel:+919876543210" className="site-footer-link">
-                +91 98765 43210
+                +91 7993948171
               </a>
             </li>
             <li className="site-footer-contact-note">Available 24/7</li>

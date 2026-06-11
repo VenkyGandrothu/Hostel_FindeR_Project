@@ -16,9 +16,9 @@ function Navbar() {
           <Link to="/know-more" className="nav-know-more">
             Know More
           </Link>
-          <button type="button" className="login-btn">
+          <Link to="/login" className="login-btn">
             Login
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

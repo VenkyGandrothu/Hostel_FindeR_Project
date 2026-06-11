@@ -184,7 +184,7 @@ function CityPicker({ isOpen, title, hostelType, onClose, onCitySelect }) {
           {isLoading && (
             <p className="city-picker-message" role="status">
               {query.trim()
-                ? `Searching for "${query.trim()}"...`
+                ? `Searching for "${query.trim()}" hostels...`
                 : "Loading cities..."}
             </p>
           )}

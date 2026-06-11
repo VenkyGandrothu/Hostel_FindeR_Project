@@ -5,17 +5,21 @@ import Footer from "../components/Footer";
 function KnowMore() {
   return (
     <>
-      <Navbar />
-      <main className="page-container know-more-page">
-        <h1 className="know-more-title">Know More</h1>
-        <p className="know-more-text">
-          Learn how Hostel Finder helps you discover safe, affordable stays near
-          colleges and workplaces across India.
-        </p>
-        <Link to="/" className="know-more-back-link">
-          Back to Home
-        </Link>
-      </main>
+      <div className="auth-screen">
+        <div className="page-container auth-screen-inner">
+          <Navbar />
+          <main className="know-more-page">
+            <h1 className="know-more-title">Know More</h1>
+            <p className="know-more-text">
+              Learn how Hostel Finder helps you discover safe, affordable stays
+              near colleges and workplaces across India.
+            </p>
+            <Link to="/" className="know-more-back-link">
+              Back to Home
+            </Link>
+          </main>
+        </div>
+      </div>
       <Footer />
     </>
   );
