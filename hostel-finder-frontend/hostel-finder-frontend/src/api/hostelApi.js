@@ -59,6 +59,13 @@ export async function getAllLocations() {
 }
 
 /**
+ * GET /api/hostels/{id}
+ */
+export async function getHostelById(id) {
+  return apiRequest(`/api/hostels/${id}`);
+}
+
+/**
  * GET /api/hostels/search?location=...&page=0&size=10
  * Returns a Spring Data Page object with hostel results.
  */

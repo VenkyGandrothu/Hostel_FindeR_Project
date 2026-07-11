@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { loginUser, saveAuthToken } from "../api/authApi";
+import { loginUser, saveAuthSession } from "../api/authApi";
 
 function Login() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function Login() {
         password,
       });
 
-      saveAuthToken(token);
+      saveAuthSession(token, { email: trimmedEmail });
       navigate("/");
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");

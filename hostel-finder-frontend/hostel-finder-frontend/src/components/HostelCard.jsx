@@ -1,49 +1,11 @@
-const DEFAULT_HOSTEL_IMAGE =
-  "https://images.unsplash.com/photo-1555854877-bab0e5643628?auto=format&fit=crop&w=800&q=80";
-
-const TYPE_LABELS = {
-  Mens: "MALE",
-  Girls: "FEMALE",
-  "Co-living": "CO-LIVING",
-};
-
-function getHostelImage(imageUrls) {
-  if (!imageUrls) return DEFAULT_HOSTEL_IMAGE;
-
-  const first = imageUrls.split(",")[0]?.trim();
-  if (first && (first.startsWith("http://") || first.startsWith("https://"))) {
-    return first;
-  }
-
-  return DEFAULT_HOSTEL_IMAGE;
-}
-
-function getRoomTypeTags(roomType) {
-  if (!roomType?.trim()) return [];
-
-  return roomType
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
-function getDirectionUrl(hostel) {
-  if (hostel.googleMapLink?.trim()) {
-    return hostel.googleMapLink.trim();
-  }
-
-  const query = encodeURIComponent(
-    [hostel.name, hostel.address, hostel.location].filter(Boolean).join(", "),
-  );
-
-  return `https://www.google.com/maps/search/?api=1&query=${query}`;
-}
-
-function formatPrice(price) {
-  return new Intl.NumberFormat("en-IN", {
-    maximumFractionDigits: 0,
-  }).format(price);
-}
+import { useNavigate } from "react-router-dom";
+import {
+  TYPE_LABELS,
+  formatPrice,
+  getDirectionUrl,
+  getHostelImage,
+  getRoomTypeTags,
+} from "../utils/hostelUtils";
 
 function MaleIcon() {
   return (
@@ -112,12 +74,32 @@ function TypeBadgeIcon({ type }) {
 }
 
 function HostelCard({ hostel }) {
+  const navigate = useNavigate();
   const typeLabel = TYPE_LABELS[hostel.type] ?? hostel.type?.toUpperCase();
   const roomTypes = getRoomTypeTags(hostel.roomType);
   const directionUrl = getDirectionUrl(hostel);
+  const detailsPath = `/hostels/${hostel.id}`;
+
+  function openDetails() {
+    navigate(detailsPath);
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openDetails();
+    }
+  }
 
   return (
-    <article className="hostel-card">
+    <article
+      className="hostel-card hostel-card--clickable"
+      role="link"
+      tabIndex={0}
+      onClick={openDetails}
+      onKeyDown={handleKeyDown}
+      aria-label={`View details for ${hostel.name}`}
+    >
       <div className="hostel-card-media">
         <img
           src={getHostelImage(hostel.imageUrls)}
@@ -130,7 +112,11 @@ function HostelCard({ hostel }) {
       <div className="hostel-card-body">
         <div className="hostel-card-top">
           <h2 className="hostel-card-title">{hostel.name}</h2>
-          <span className={`hostel-card-type-badge hostel-card-type-badge--${hostel.type?.toLowerCase().replace(/\s+/g, "-")}`}>
+          <span
+            className={`hostel-card-type-badge hostel-card-type-badge--${hostel.type
+              ?.toLowerCase()
+              .replace(/\s+/g, "-")}`}
+          >
             <TypeBadgeIcon type={hostel.type} />
             {typeLabel}
           </span>
@@ -164,6 +150,7 @@ function HostelCard({ hostel }) {
             target="_blank"
             rel="noopener noreferrer"
             className="hostel-card-direction"
+            onClick={(event) => event.stopPropagation()}
           >
             <MapPinIcon />
             View Direction
@@ -177,18 +164,30 @@ function HostelCard({ hostel }) {
           </p>
 
           <div className="hostel-card-actions">
-            <button type="button" className="hostel-card-btn hostel-card-btn--primary">
+            <button
+              type="button"
+              className="hostel-card-btn hostel-card-btn--primary"
+              onClick={(event) => {
+                event.stopPropagation();
+                navigate(`${detailsPath}#schedule`);
+              }}
+            >
               Schedule A Visit
             </button>
             {hostel.contactNumber ? (
               <a
                 href={`tel:${hostel.contactNumber}`}
                 className="hostel-card-btn hostel-card-btn--outline"
+                onClick={(event) => event.stopPropagation()}
               >
                 Request a call
               </a>
             ) : (
-              <button type="button" className="hostel-card-btn hostel-card-btn--outline">
+              <button
+                type="button"
+                className="hostel-card-btn hostel-card-btn--outline"
+                onClick={(event) => event.stopPropagation()}
+              >
                 Request a call
               </button>
             )}

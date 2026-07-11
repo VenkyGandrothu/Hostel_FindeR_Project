@@ -59,21 +59,15 @@ public class HostelSpecification {
                 );
             }
 
-            // ⭐ RATING
-            if (rating != null) {
-                predicate = cb.and(
-                        predicate,
-                        cb.greaterThanOrEqualTo(root.get("rating"), rating)
-                );
-            }
-
-            // 🛏️ BEDS
+            // 🛏️ MINIMUM TOTAL BEDS (hostel capacity)
             if (beds != null) {
                 predicate = cb.and(
                         predicate,
-                        cb.equal(root.get("beds"), beds)
+                        cb.greaterThanOrEqualTo(root.get("totalBeds"), beds)
                 );
             }
+
+            // Note: rating filter omitted — Hostel entity has no rating field yet.
 
             return predicate;
         };

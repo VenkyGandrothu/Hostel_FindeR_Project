@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { registerUser } from "../api/authApi";
+import { registerUser, savePendingAuthName } from "../api/authApi";
 
 function Signup() {
   const navigate = useNavigate();
@@ -37,6 +37,9 @@ function Signup() {
         email: trimmedEmail,
         password,
       });
+
+      // Remember the name so the navbar can show it after login
+      savePendingAuthName(trimmedName);
 
       navigate("/login", {
         state: { message: "Account created successfully. Please log in." },
