@@ -33,20 +33,27 @@ function Services() {
         <h2 id="services-heading" className="section-heading">
           Services We Are Providing
         </h2>
+        <p className="services-subheading">
+          Everything you need to find, book, and stay with confidence.
+        </p>
       </header>
 
       <ul className="services-grid">
         {SERVICES.map((service) => (
           <li key={service.id} className="services-grid-item">
-            <article className="service-item">
-              <img
-                src={service.image}
-                alt=""
-                className="service-icon"
-                aria-hidden="true"
-              />
-              <h3 className="service-title">{service.title}</h3>
-              <p className="service-description">{service.description}</p>
+            <article className="service-card">
+              <div className="service-icon-wrap">
+                <img
+                  src={service.image}
+                  alt=""
+                  className="service-icon"
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="service-content">
+                <h3 className="service-title">{service.title}</h3>
+                <p className="service-description">{service.description}</p>
+              </div>
             </article>
           </li>
         ))}
