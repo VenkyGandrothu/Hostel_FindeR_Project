@@ -1,24 +1,57 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo/logo.png";
 
 function Navbar() {
+  const { pathname } = useLocation();
+  const isLoginPage = pathname === "/login";
+  const isSignupPage = pathname === "/signup";
+  const isAuthPage = isLoginPage || isSignupPage;
+
   return (
-    <nav className="bg-[var(--surface-white)]">
-      <div className="mx-auto flex w-full max-w-[1280px] items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
-        <Link to="/">
+    <nav className={`site-navbar${isAuthPage ? " site-navbar--auth" : ""}`}>
+      <div className="site-navbar-inner">
+        <Link to="/" className="site-navbar-logo-link">
           <img
             src={logo}
             alt="Hostel Finder"
-            className="h-12 w-auto cursor-pointer object-contain sm:h-[60px]"
+            className="site-navbar-logo"
           />
         </Link>
+
         <div className="navbar-actions">
-          <Link to="/know-more" className="nav-know-more">
-            Know More
-          </Link>
-          <button type="button" className="login-btn">
-            Login
-          </button>
+          {!isAuthPage && (
+            <Link to="/know-more" className="nav-know-more">
+              Know More
+            </Link>
+          )}
+
+          {isLoginPage && (
+            <>
+              <Link to="/" className="nav-know-more">
+                Home
+              </Link>
+              <Link to="/signup" className="login-btn">
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {isSignupPage && (
+            <>
+              <Link to="/" className="nav-know-more">
+                Home
+              </Link>
+              <Link to="/login" className="login-btn">
+                Login
+              </Link>
+            </>
+          )}
+
+          {!isAuthPage && (
+            <Link to="/login" className="login-btn">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
